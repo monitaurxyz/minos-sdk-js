@@ -30,7 +30,16 @@ const minos = new Minos('WORKSPACE_ID', 'MONITAUR_API_KEY');
 4) Start monitoring your Web3 application by using Minos' APIs and functions.
 
 ```javascript
-const Minos = require("@minos/sdk-js");
+minos.events.create({
+  name: "Your App Name", // required
+  userId: "440e0a20-cd48-4cac-b292-25889f4eaf3a", // required
+  address: "0x354c818ca8b9251b393131c23a736a67ccb19297", // defaults to null
+  isError: true, // defaults to false
+  context: {
+    message: "Add context that helps your team",
+    // You can add whatever you'd like here
+  },
+});
 ```
 
 
