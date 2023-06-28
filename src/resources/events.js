@@ -4,7 +4,7 @@ class Events {
     this.workspaceId = config.config.workspaceId;
   }
 
-  async create(name, userId, address = null, isError = false, context = {}) {
+  async create(name, userId, address = null, logLevel = "success", message = null, context = {}) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     if (!name || typeof name !== "string") {
@@ -19,7 +19,8 @@ class Events {
       name: name,
       userId: userId,
       address: address,
-      isError: isError,
+      logLevel: logLevel,
+      message: message,
       context: context,
       workspaceId: this.workspaceId,
     });
