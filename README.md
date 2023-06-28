@@ -34,7 +34,8 @@ minos.events.create({
   name: "Your App Name", // required
   userId: "440e0a20-cd48-4cac-b292-25889f4eaf3a", // required
   address: "0x354c818ca8b9251b393131c23a736a67ccb19297", // defaults to null
-  isError: true, // defaults to false
+  logLevel: "warn", // defaults to success
+  message: "Any message you want to share here for top level context", // optional
   context: {
     message: "Add context that helps your team",
     // You can add whatever you'd like here
