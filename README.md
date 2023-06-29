@@ -7,19 +7,19 @@ To use Minos, follow these steps:
 1) Install Minos using your preferred package manager:
 
 ```bash
-npm install @minos/sdk-js
+npm install minos-sdk
 ```
 
 or
 
 ```bash
-yarn add @minos/sdk-js
+yarn add minos-sdk
 ```
 
 2) Import the Minos module in your application:
 
 ```javascript
-const Minos = require('@minos/sdk-js');
+const Minos = require('minos-sdk');
 ```
 
 3) Initialize Minos with your Monitaur Minos Source Token:
@@ -35,7 +35,7 @@ There are six levels you can create an event for:
 `fatal`, `warn`, `error`, `info`, `debug`, and `trace`
 
 ```javascript
-minos.events.fatal({
+minos.fatal({
   name: "Your App Name", // required
   userId: "440e0a20-cd48-4cac-b292-25889f4eaf3a", // required
   address: "0x354c818ca8b9251b393131c23a736a67ccb19297", // defaults to null

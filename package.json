@@ -1,9 +1,10 @@
 {
   "name": "minos-sdk",
-  "version": "0.0.1",
+  "version": "0.0.11",
   "description": "The Minos SDK is for web3 native companies to observe and monitor their web3 infrastructure end to end.",
   "main": "dist/index.js",
   "scripts": {
+    "prepublish": "npm run build",
     "build": "npx webpack --config webpack.config.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,7 +19,7 @@
   },
   "homepage": "https://github.com/monitaurxyz/minos-sdk-js#readme",
   "dependencies": {
-    "axios": "^1.4.0"
+    "axios": "^0.27.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
