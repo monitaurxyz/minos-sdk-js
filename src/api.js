@@ -10,6 +10,7 @@ class API {
 
     this.axios = axios.create();
     this.axios.defaults.baseURL = this.baseURL;
+
     const { token } = this.config;
 
     if (!token || typeof token !== "string") throw new SDKError(500, "Minos: No token was found, please pass one when initializing Minos.");
