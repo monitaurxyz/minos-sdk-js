@@ -22,19 +22,23 @@ yarn add @minos/sdk-js
 const Minos = require('@minos/sdk-js');
 ```
 
-3) Initialize Minos with your Monitaur API key:
+3) Initialize Minos with your Monitaur Minos Source Token:
 
 ```javascript
-const minos = new Minos('WORKSPACE_ID', 'MONITAUR_API_KEY');
+const minos = new Minos('MINOS_SOURCE_TOKEN');
 ```
+
 4) Start monitoring your Web3 application by using Minos' APIs and functions.
 
+There are six levels you can create an event for:
+
+`fatal`, `warn`, `error`, `info`, `debug`, and `trace`
+
 ```javascript
-minos.events.create({
+minos.events.fatal({
   name: "Your App Name", // required
   userId: "440e0a20-cd48-4cac-b292-25889f4eaf3a", // required
   address: "0x354c818ca8b9251b393131c23a736a67ccb19297", // defaults to null
-  logLevel: "warn", // defaults to success
   message: "Any message you want to share here for top level context", // optional
   context: {
     message: "Add context that helps your team",

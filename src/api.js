@@ -10,13 +10,9 @@ class API {
 
     this.axios = axios.create();
     this.axios.defaults.baseURL = this.baseURL;
-    const { workspaceId, apiKey } = this.config;
+    const { token } = this.config;
 
-    if (!workspaceId || typeof workspaceId !== "string")
-      throw new SDKError(500, "Minos: No WorkspaceId was found, please pass one when initializing Minos.");
-
-    if (!apiKey || typeof apiKey !== "string")
-      throw new SDKError(500, "Minos: No API Key was found, please pass one when initializing Minos.");
+    if (!token || typeof token !== "string") throw new SDKError(500, "Minos: No token was found, please pass one when initializing Minos.");
   }
 
   init() {
