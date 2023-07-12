@@ -11,22 +11,22 @@ module.exports = () => {
     // Add banner to the top of each generated chunk.
     new webpack.BannerPlugin({
       banner: `
-        @Copyright (c) 2021-present, Monitaur & Luumen Inc. All rights reserved.
+        @Copyright (c) 2021-present, Monitaur & Enfra Inc. All rights reserved.
         @Version: ${JSON.stringify(process.env.PACKAGE_VERSION)}
       `,
     }),
   ];
 
   // Compile for usage in a browser-like environment.
-  // Output: "./dist/monitaur.js"
+  // Output: "./dist/minos.js"
   const browserConfig = {
     mode: "production",
     target: "web",
     devtool: "source-map",
     entry: "./src/index.js",
     output: {
-      library: "Monitaur",
-      filename: "monitaur.js",
+      library: "Minos",
+      filename: "minos.js",
       path: path.resolve(__dirname, "dist"),
       libraryTarget: "window",
     },
