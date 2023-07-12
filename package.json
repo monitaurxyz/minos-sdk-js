@@ -1,6 +1,6 @@
 {
   "name": "minos-sdk",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "description": "The Minos SDK is for web3 native companies to observe and monitor their web3 infrastructure end to end.",
   "main": "dist/index.js",
   "scripts": {
