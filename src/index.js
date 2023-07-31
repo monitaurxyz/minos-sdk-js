@@ -16,6 +16,10 @@ class Minos {
     this.api = new API(config);
   }
 
+  ethers(rpcUrl) {
+    return this.api.ethers(rpcUrl);
+  }
+
   fatal(userId, address, message, context) {
     return this.api.fatal(userId, address, message, context);
   }

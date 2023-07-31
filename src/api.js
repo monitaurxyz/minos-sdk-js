@@ -1,6 +1,7 @@
 const constants = require("./constants");
 const enableResources = require("./resources");
 const axios = require("axios");
+const ethers = require("ethers");
 
 class API {
   constructor(token) {
@@ -14,6 +15,38 @@ class API {
     this.config = {
       token: token,
     };
+  }
+
+  async ethers(rpcUrl) {
+    const proxyHandler = {
+      get: function (target, property, receiver) {
+        if (typeof target[property] === "function") {
+          return function (...args) {
+            try {
+              // Intercept the function call and handle it with custom logic
+              console.log(`Calling ${property} with arguments:`, args);
+              const result = target[property].apply(target, args);
+              console.log(`Result of ${property}:`, result);
+              return result;
+            } catch (error) {
+              // Handle any errors that might occur
+              console.error(`Error in ${property}:`, error);
+              throw error;
+            }
+          };
+        } else {
+          // If the property is not a function, return the property directly
+          return target[property];
+        }
+      },
+    };
+
+    const minosEthers = new Proxy(ethers.ethers, proxyHandler);
+
+    // now lets instaniate the ethers provider
+    const instantiatedProvider = new minosEthers.providers.JsonRpcProvider(rpcUrl);
+
+    return instantiatedProvider;
   }
 
   async fatal(userId, address = null, message = null, context = {}) {

@@ -19,7 +19,8 @@
   },
   "homepage": "https://github.com/monitaurxyz/minos-sdk-js#readme",
   "dependencies": {
-    "axios": "^0.27.2"
+    "axios": "^0.27.2",
+    "ethers": "^5.7.2"
   },
   "devDependencies": {
     "@babel/core": "^7.17.5",
