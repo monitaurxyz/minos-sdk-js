@@ -17,17 +17,6 @@ class API {
     };
   }
 
-  async ethers(rpcUrl) {
-    
-
-    const minosEthers = new Proxy(ethers.ethers, proxyHandler);
-
-    // now lets instaniate the ethers provider
-    const instantiatedProvider = new minosEthers.providers.JsonRpcProvider(rpcUrl);
-
-    return instantiatedProvider;
-  }
-
   async fatal(userId, address = null, message = null, context = {}) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 

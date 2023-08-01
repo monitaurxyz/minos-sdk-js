@@ -10,14 +10,12 @@
 // module.exports = new Minos();
 
 const API = require("./api");
+const Ethers = require("./ethers");
 
 class Minos {
   constructor(config = {}) {
     this.api = new API(config);
-  }
-
-  ethers(rpcUrl) {
-    return this.api.ethers(rpcUrl);
+    this.ethers = new Ethers(config);
   }
 
   fatal(userId, address, message, context) {
