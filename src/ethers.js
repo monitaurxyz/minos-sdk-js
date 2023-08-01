@@ -44,7 +44,7 @@ class Ethers {
     return response.data;
   }
 
-  async getBalance(address) {
+  async getBalance(address, options) {
     try {
       if (!this.provider) {
         throw new Error("Ethers package is not initialized. Call init() first.");
@@ -53,17 +53,30 @@ class Ethers {
       const balance = await this.provider.getBalance(address);
       // return ethers.utils.formatEther(balance); // Convert the balance from Wei to Ether
 
+      let context = {
+        balance: ethers.utils.formatEther(balance),
+        rawBalance: balance.toString(),
+        address: address,
+        timestamp: Date.now(),
+      };
+
+      if (options.context) {
+        context = {
+          ...context,
+          ...options.context,
+        };
+      }
+
+      console.log("Context:", context);
+
       await this._request("info", {
         userId: address,
         address: address,
         message: "Balance retrieved successfully.",
-        context: {
-          balance: ethers.utils.formatEther(balance),
-          rawBalance: balance.toString(),
-          address: address,
-          timestamp: Date.now(),
-        },
+        context: context,
       });
+
+      console.log("Balance retrieved successfully:", balance.toString());
 
       return balance;
     } catch (err) {
@@ -91,7 +104,38 @@ class Ethers {
         },
       });
 
+      console.log("Transaction retrieved successfully:", txn);
+
       return txn;
+    } catch (err) {
+      console.error("Error getting balance:", err.message);
+      throw err;
+    }
+  }
+
+  async getTransactionCount(address) {
+    try {
+      if (!this.provider) {
+        throw new Error("Ethers package is not initialized. Call init() first.");
+      }
+
+      const txnCount = await this.provider.getTransactionCount(address);
+      // return ethers.utils.formatEther(balance); // Convert the balance from Wei to Ether
+
+      await this._request("info", {
+        userId: this.token,
+        address: address,
+        message: "Transaction acount retrieved.",
+        context: {
+          count: txnCount,
+          address: address,
+          timestamp: Date.now(),
+        },
+      });
+
+      console.log("Txn Count:", txnCount);
+
+      return txnCount;
     } catch (err) {
       console.error("Error getting balance:", err.message);
       throw err;
