@@ -17,12 +17,8 @@ class API {
     };
   }
 
-  async fatal(userId, address = null, message = null, context = {}) {
+  async fatal(context = {}, userId = null, address = null, message = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
 
     return await this._request("fatal", {
       userId: userId,
@@ -32,12 +28,8 @@ class API {
     });
   }
 
-  async warn(userId, address = null, message = null, context = {}) {
+  async warn(context = {}, userId = null, address = null, message = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
 
     return await this._request("warn", {
       userId: userId,
@@ -47,12 +39,8 @@ class API {
     });
   }
 
-  async error(userId, address = null, message = null, context = {}) {
+  async error(context = {}, userId = null, address = null, message = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
 
     return await this._request("error", {
       userId: userId,
@@ -62,12 +50,8 @@ class API {
     });
   }
 
-  async info(userId, address = null, message = null, context = {}) {
+  async info(context = {}, userId = null, address = null, message = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
 
     return await this._request("info", {
       userId: userId,
@@ -77,12 +61,8 @@ class API {
     });
   }
 
-  async debug(userId, address = null, message = null, context = {}) {
+  async debug(context = {}, userId = null, address = null, message = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
 
     return await this._request("debug", {
       userId: userId,
@@ -92,12 +72,8 @@ class API {
     });
   }
 
-  async trace(userId, address = null, message = null, context = {}) {
-    // We can validate the event here before even sending it, to avoid unnecessary requests.
-
-    if (!userId || typeof userId !== "string") {
-      throw new Error("Please provide a valid String for the userId.");
-    }
+  async trace(context = {}, userId = null, address = null, message = null) {
+    // We can validate the event here before even sending it, to avoid unnecessary requests
 
     return await this._request("trace", {
       userId: userId,
