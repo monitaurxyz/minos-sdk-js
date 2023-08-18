@@ -11,11 +11,13 @@
 
 const API = require("./api");
 const Ethers = require("./ethers");
+const InjectionLogging = require("./injectionLogging");
 
 class Minos {
   constructor(config = {}) {
     this.api = new API(config);
     this.ethers = new Ethers(config);
+    this.injectionLogging = new InjectionLogging();
   }
 
   fatal(userId, address, message, context) {
