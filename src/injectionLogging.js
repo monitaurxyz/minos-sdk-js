@@ -28,11 +28,9 @@ class InjectionLogging {
       }
     };
 
-    console.log(provider.network);
-
     console.log(provider);
 
-    return new CustomProvider();
+    return new CustomProvider(provider.connection.url, provider._network.chainId);
   }
 
   init(provider, options) {
