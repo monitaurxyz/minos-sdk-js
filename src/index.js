@@ -11,7 +11,7 @@
 
 const API = require("./api");
 const Ethers = require("./ethers");
-const InjectionLogging = require("./baseProvider");
+const InjectionLogging = require("./injectionLogger");
 
 class Minos {
   constructor(config = {}) {
