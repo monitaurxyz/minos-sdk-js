@@ -11,12 +11,28 @@
 
 const API = require("./api");
 const Ethers = require("./ethers");
+const InjectionLogging = require("./baseProvider");
 
 class Minos {
   constructor(config = {}) {
     this.api = new API(config);
     this.ethers = new Ethers(config);
+    this.injectionLogging = null;
   }
+
+   // Initialize InjectionLogging with the user's provider
+   initializeInjectionLogging(provider) {
+    // console.log("provider ------>", provider);
+    this.injectionLogging = new InjectionLogging(provider);
+
+}
+
+unwatch() {
+  if(this.injectionLogging) {
+    this.injectionLogging.unwatch();
+  }
+}
+
 
   fatal(userId, address, message, context) {
     return this.api.fatal(userId, address, message, context);
