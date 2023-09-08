@@ -20,34 +20,33 @@ class Minos {
     this.injectionLogging = null;
   }
 
-   // Initialize InjectionLogging with the user's provider
-   initializeInjectionLogging(provider) {
+  // Initialize InjectionLogging with the user's provider
+  initializeInjectionLogging(provider) {
     this.injectionLogging = new InjectionLogging(provider, this.api.config.token);
-}
-
-
-  fatal(userId, address, message, context) {
-    return this.api.fatal(userId, address, message, context);
   }
 
-  warn(userId, address, message, context) {
-    return this.api.warn(userId, address, message, context);
+  fatal(message, context, userId, address) {
+    return this.api.fatal(message, context, userId, address);
   }
 
-  error(userId, address, message, context) {
-    return this.api.error(userId, address, message, context);
+  warn(message, context, userId, address) {
+    return this.api.warn(message, context, userId, address);
   }
 
-  info(userId, address, message, context) {
-    return this.api.info(userId, address, message, context);
+  error(message, context, userId, address) {
+    return this.api.error(message, context, userId, address);
   }
 
-  debug(userId, address, message, context) {
-    return this.api.debug(userId, address, message, context);
+  info(message, context, userId, address) {
+    return this.api.info(message, context, userId, address);
   }
 
-  trace(userId, address, message, context) {
-    return this.api.trace(userId, address, message, context);
+  debug(message, context, userId, address) {
+    return this.api.debug(message, context, userId, address);
+  }
+
+  trace(message, context, userId, address) {
+    return this.api.trace(message, context, userId, address);
   }
 }
 

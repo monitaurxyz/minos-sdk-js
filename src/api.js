@@ -17,7 +17,7 @@ class API {
     };
   }
 
-  async fatal(context = {}, userId = null, address = null, message = null) {
+  async fatal(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("fatal", {
@@ -28,7 +28,7 @@ class API {
     });
   }
 
-  async warn(context = {}, userId = null, address = null, message = null) {
+  async warn(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("warn", {
@@ -39,7 +39,7 @@ class API {
     });
   }
 
-  async error(context = {}, userId = null, address = null, message = null) {
+  async error(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("error", {
@@ -50,7 +50,7 @@ class API {
     });
   }
 
-  async info(context = {}, userId = null, address = null, message = null) {
+  async info(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("info", {
@@ -61,7 +61,7 @@ class API {
     });
   }
 
-  async debug(context = {}, userId = null, address = null, message = null) {
+  async debug(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("debug", {
@@ -72,7 +72,7 @@ class API {
     });
   }
 
-  async trace(context = {}, userId = null, address = null, message = null) {
+  async trace(message = null, context = {}, userId = null, address = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests
 
     return await this._request("trace", {

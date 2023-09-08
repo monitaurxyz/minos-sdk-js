@@ -22,11 +22,13 @@ yarn add minos-sdk
 const Minos = require('minos-sdk');
 ```
 
-3) Initialize Minos with your Monitaur Minos Source Token:
+3) Initialize Minos with your Monitaur Minos Application Token:
 
 ```javascript
-const minos = new Minos('MINOS_SOURCE_TOKEN');
+const minos = new Minos('MINOS_APPLICATION_TOKEN');
 ```
+
+If you haven't created an Application yet, you can do so [here](https://app.monitaur.xyz/applications)
 
 4) Start monitoring your Web3 application by using Minos' APIs and functions.
 
@@ -35,16 +37,26 @@ There are six levels you can create an event for:
 `fatal`, `warn`, `error`, `info`, `debug`, and `trace`
 
 ```javascript
-minos.fatal({
-  name: "Your App Name", // required
-  userId: "440e0a20-cd48-4cac-b292-25889f4eaf3a", // required
-  address: "0x354c818ca8b9251b393131c23a736a67ccb19297", // defaults to null
-  message: "Any message you want to share here for top level context", // optional
-  context: {
+minos.fatal(
+  "Any message you want to share here for top level context",
+  {
     message: "Add context that helps your team",
-    // You can add whatever you'd like here
+    // This is the context object, you can add whatever you'd like here
   },
-});
+  "userId", // not required
+  "address" // not required
+  );
+```
+
+### Usage with Ethers.js
+If you're using Ethers.js, we've built in custom injection logging that will create `info` and `error` events respectively. To do this the set up is really simple, you'll pass in the ethers provider that you created.
+
+```javascript
+minos.initializeInjectionLogging(yourEthersProvider);
+
+// make your Ethers
+await provider.getBlock()
+
 ```
 
 
