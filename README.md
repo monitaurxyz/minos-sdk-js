@@ -66,3 +66,4 @@ If you encounter any issues, have questions, or would like to provide feedback, 
 ## Authors
 
 - [@foundercasey](https://github.com/FounderCasey)
+- [@NickGonzalez04](https://github.com/NickGonzalez04)
