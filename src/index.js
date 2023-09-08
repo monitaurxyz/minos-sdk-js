@@ -23,7 +23,7 @@ class Minos {
    // Initialize InjectionLogging with the user's provider
    initializeInjectionLogging(provider) {
     // console.log("provider ------>", provider);
-    this.injectionLogging = new InjectionLogging(provider);
+    this.injectionLogging = new InjectionLogging(provider, this.api.config.token);
 
 }
 
