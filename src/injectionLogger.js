@@ -20,7 +20,6 @@ class InjectionLogging {
             try {
                 // Call the original `perform` method to send the RPC request
                 const result = await this.originalPerform.call(provider, method, params);
-                // console.log(`Injection Logger Function result for ${method}: ${parseInt(result, 16)}`);
 
                   await this._request("info", {
                     // userId: "userId",
@@ -51,14 +50,6 @@ class InjectionLogging {
             }
         };
     }
-
-    unwatch() {
-        // Restore the original `perform` method to stop watching
-        if (this.provider && this.originalPerform) {
-            this.provider.perform = this.originalPerform;
-        }
-    }
-
 
   async _request(level, data) {
     const response = await this.axios.post("/create-event", {
