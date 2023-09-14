@@ -18,6 +18,13 @@ class Minos {
     this.api = new API(config);
     this.ethers = new Ethers(config);
     this.injectionLogging = null;
+    this.sessionId = this.generateSessionId();
+
+  }
+
+  generateSessionId() {
+    return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
   }
 
   // Initialize InjectionLogging with the user's provider
@@ -25,12 +32,19 @@ class Minos {
     this.injectionLogging = new InjectionLogging(provider, this.api.config.token);
   }
 
+  logSessionData(level, message, context, userId, address) {
+    const sessionId = this.sessionId;
+    this.api[level](message, context, userId, address, sessionId);
+  }
+
   fatal(message, context, userId, address) {
-    return this.api.fatal(message, context, userId, address);
+    console.log("fatal", message, context, userId, address, this.sessionId);
+    return this.logSessionData("fatal", message, context, userId, address, this.sessionId);
   }
 
   warn(message, context, userId, address) {
-    return this.api.warn(message, context, userId, address);
+    console.log("fatal", message, context, userId, address, this.sessionId);
+    return this.logSessionData("warn", message, context, userId, address, this.sessionId);
   }
 
   error(message, context, userId, address) {

@@ -17,7 +17,7 @@ class API {
     };
   }
 
-  async fatal(message = null, context = {}, userId = null, address = null) {
+  async fatal(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("fatal", {
@@ -25,10 +25,11 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
-  async warn(message = null, context = {}, userId = null, address = null) {
+  async warn(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("warn", {
@@ -36,10 +37,11 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
-  async error(message = null, context = {}, userId = null, address = null) {
+  async error(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("error", {
@@ -47,10 +49,11 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
-  async info(message = null, context = {}, userId = null, address = null) {
+  async info(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("info", {
@@ -58,10 +61,11 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
-  async debug(message = null, context = {}, userId = null, address = null) {
+  async debug(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests.
 
     return await this._request("debug", {
@@ -69,10 +73,11 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
-  async trace(message = null, context = {}, userId = null, address = null) {
+  async trace(message = null, context = {}, userId = null, address = null, sessionId = null) {
     // We can validate the event here before even sending it, to avoid unnecessary requests
 
     return await this._request("trace", {
@@ -80,10 +85,12 @@ class API {
       address: address,
       message: message,
       context: context,
+      sessionId: sessionId,
     });
   }
 
   async _request(level, data) {
+    console.log("data", data);
     const response = await this.axios.post("/create-event", {
       logLevel: level,
       ...data,
