@@ -29,7 +29,7 @@ class Minos {
 
   // Initialize InjectionLogging with the user's provider
   initializeInjectionLogging(provider) {
-    this.injectionLogging = new InjectionLogging(provider, this.api.config.token);
+    this.injectionLogging = new InjectionLogging(provider, this.api.config.token, this.sessionId);
   }
 
   logSessionData(level, message, context, userId, address) {
@@ -38,29 +38,27 @@ class Minos {
   }
 
   fatal(message, context, userId, address) {
-    console.log("fatal", message, context, userId, address, this.sessionId);
     return this.logSessionData("fatal", message, context, userId, address, this.sessionId);
   }
 
   warn(message, context, userId, address) {
-    console.log("fatal", message, context, userId, address, this.sessionId);
     return this.logSessionData("warn", message, context, userId, address, this.sessionId);
   }
 
   error(message, context, userId, address) {
-    return this.api.error(message, context, userId, address);
+    return this.logSessionData("earn", message, context, userId, address, this.sessionId);
   }
 
   info(message, context, userId, address) {
-    return this.api.info(message, context, userId, address);
+    return this.logSessionData("info", message, context, userId, address, this.sessionId);
   }
 
   debug(message, context, userId, address) {
-    return this.api.debug(message, context, userId, address);
+    return this.logSessionData("debug", message, context, userId, address, this.sessionId);
   }
 
   trace(message, context, userId, address) {
-    return this.api.trace(message, context, userId, address);
+    return this.logSessionData("trace", message, context, userId, address, this.sessionId);
   }
 }
 
