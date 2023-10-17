@@ -3,7 +3,7 @@ const constants = require("./constants");
 const axios = require("axios");
 
 class InjectionLogging {
-  constructor(provider, token, sessionId, browserInfo) {
+  constructor(provider, token, sessionId, browserInfo, selectedAddress) {
     this.provider = provider;
     this.originalPerform = provider.perform;
     this.baseURL = constants.MONITAUR_URL;
@@ -13,56 +13,58 @@ class InjectionLogging {
     this.token = token;
     this.sessionId = sessionId;
     this.browserInfo = browserInfo,
-      // Override the `perform` method
-      (provider.perform = async (method, params) => {
-        // Intercept function call and log it
-        // Intercept function call and log it
-        const decodedMethod = this.decodeMethod(method);
+    this.selectedAddress = selectedAddress;
+    // Override the `perform` method
+    provider.perform = async (method, params) => {
+      // Intercept function call and log it
+      // Intercept function call and log it
+      const decodedMethod = this.decodeMethod(method);
 
-        console.log("provider perform", decodedMethod.name, decodedMethod.args);
-        console.log("provider perform", method, params, this.browserInfo);
-        console.log("browserInfo", this.browserInfo);
-        try {
-          // Call the original `perform` method to send the RPC request
-          const result = await this.originalPerform.call(
-            provider,
-            method,
-            params
-          );
+      console.log("provider perform", decodedMethod.name, decodedMethod.args);
+      console.log("provider perform", method, params, this.browserInfo, this.selectedAddress);
 
-          const body ={
-            // userId: "userId",
-            // address: "address",
-            message: `Injection Logger Function result for ${method}`,
-            context: {
-              result: result,
-              method: method,
-              params: params,
-            },
-            sessionId: this.sessionId,
-            browserInfo: this.browserInfo,
-          }
-          console.log("body", body);
-          await this._request("info", body);
 
-          return result;
-        } catch (error) {
-          await this._request("error", {
-            // userId: "userId",
-            // address: "address",
-            message: `Error calling ${method}`,
-            context: {
-              error: error,
-              method: method,
-              params: params,
-            },
-            sessionId: this.sessionId,
-            browserInfo: this.browserInfo,
-          });
+      try {
+        // Call the original `perform` method to send the RPC request
+        const result = await this.originalPerform.call(
+          provider,
+          method,
+          params
+        );
 
-          throw error;
-        }
-      });
+        const body = {
+          // userId: "userId",
+          address: this.selectedAddress,
+          message: `Injection Logger Function result for ${method}`,
+          context: {
+            result: result,
+            method: method,
+            params: params,
+          },
+          sessionId: this.sessionId,
+          browserInfo: this.browserInfo,
+        };
+        console.log("body", body);
+        await this._request("info", body);
+
+        return result;
+      } catch (error) {
+        await this._request("error", {
+          // userId: "userId",
+          // address: "address",
+          message: `Error calling ${method}`,
+          context: {
+            error: error,
+            method: method,
+            params: params,
+          },
+          sessionId: this.sessionId,
+          browserInfo: this.browserInfo,
+        });
+
+        throw error;
+      }
+    };
   }
 
   // Decode the method call to get the function name and arguments
@@ -88,13 +90,11 @@ class InjectionLogging {
       console.error("Browser info is missing. Log request aborted.");
       return;
     }
-    // console.log(this.browserInfo);
+ 
     const response = await this.axios.post("/create-event", {
       logLevel: level,
       ...data,
       token: this.token,
-      //   sessionId: this.sessionId,
-
     });
     console.log(response.data);
 

@@ -15,7 +15,7 @@ class Minos {
     this.sessionId = uuidv4();
     // Automatically capture the browser information upon initialization
     this.browserInfo = this.captureBrowserInfo();
-
+    this.selectedAddress = this.getSelectedAddress();
     }
     
     captureBrowserInfo() {
@@ -40,22 +40,36 @@ class Minos {
       }
   }
 
- 
+  getSelectedAddress() {
 
+    if(typeof window !== 'undefined' && window.ethereum && window.ethereum.selectedAddress) {
+      console.log("Selected Address:", window.ethereum.selectedAddress);
+      return window.ethereum.selectedAddress;
+
+    } else {
+      return null;
+    }
+  }
+ 
+  
+  
 
   // Initialize InjectionLogging with the user's provider
   initializeInjectionLogging(provider) {
+    console.log(this.selectedAddress);
     if (
       this.browserInfo &&
       this.browserInfo.domain &&
       this.browserInfo.path &&
-      this.browserInfo.userAgent
+      this.browserInfo.userAgent &&
+      this.selectedAddress
     ) {
       this.injectionLogging = new InjectionLogging(
         provider,
         this.api.config.token,
         this.sessionId,
-        this.browserInfo
+        this.browserInfo,
+        this.selectedAddress
       );
     } else {
       console.error(
