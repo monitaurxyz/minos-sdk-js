@@ -15,7 +15,12 @@ class Minos {
     this.sessionId = uuidv4();
     // Automatically capture the browser information upon initialization
     this.browserInfo = this.captureBrowserInfo();
-    this.selectedAddress = this.getSelectedAddress();
+
+    // Initialize selectedAddress
+    this.waitForEthereum().then((ethereum) => {
+      this.selectedAddress = this.getSelectedAddress();
+      // You can also trigger other init tasks here, if needed
+      });
     }
     
     captureBrowserInfo() {
@@ -40,36 +45,46 @@ class Minos {
       }
   }
 
-  getSelectedAddress() {
-
-    if(typeof window !== 'undefined' && window.ethereum && window.ethereum.selectedAddress) {
-      console.log("Selected Address:", window.ethereum.selectedAddress);
-      return window.ethereum.selectedAddress;
-
-    } else {
-      return null;
-    }
+async getSelectedAddress() {
+  await this.waitForEthereum();
+  return window.ethereum.selectedAddress;
   }
+
+  waitForEthereum() {
+    return new Promise((resolve) => {
+
+    const checkForEthereumAndAddress = () => {
+      if (window.ethereum && window.ethereum.selectedAddress) {
+        clearInterval(checkInterval);
+        resolve(window.ethereum);
+      }
+    };
+
+    const checkInterval = setInterval(checkForEthereumAndAddress, 100); // Check every 100ms
+
+    // Do an immediate check in case it's already available
+    checkForEthereumAndAddress();
+  });
+}
  
-  
-  
 
   // Initialize InjectionLogging with the user's provider
-  initializeInjectionLogging(provider) {
-    console.log(this.selectedAddress);
+  async initializeInjectionLogging(provider) {
+    const selectedAddress = await this.getSelectedAddress();
+    console.log(selectedAddress);
     if (
       this.browserInfo &&
       this.browserInfo.domain &&
       this.browserInfo.path &&
       this.browserInfo.userAgent &&
-      this.selectedAddress
+      selectedAddress
     ) {
       this.injectionLogging = new InjectionLogging(
         provider,
         this.api.config.token,
         this.sessionId,
         this.browserInfo,
-        this.selectedAddress
+        selectedAddress
       );
     } else {
       console.error(
