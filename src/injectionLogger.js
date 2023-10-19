@@ -17,11 +17,10 @@ class InjectionLogging {
     // Override the `perform` method
     provider.perform = async (method, params) => {
       // Intercept function call and log it
-      // Intercept function call and log it
       const decodedMethod = this.decodeMethod(method);
 
-      console.log("provider perform", decodedMethod.name, decodedMethod.args);
-      console.log("provider perform", method, params, this.browserInfo, typeof this.selectedAddress);
+    //   console.log("provider perform", decodedMethod.name, decodedMethod.args);
+    //   console.log("provider perform", method, params, this.browserInfo, typeof this.selectedAddress);
 
       try {
         // Call the original `perform` method to send the RPC request
@@ -95,7 +94,6 @@ class InjectionLogging {
       ...data,
       token: this.token,
     });
-    console.log(response.data);
 
     return response.data;
   }
