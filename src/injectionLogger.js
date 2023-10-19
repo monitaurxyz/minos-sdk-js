@@ -21,8 +21,7 @@ class InjectionLogging {
       const decodedMethod = this.decodeMethod(method);
 
       console.log("provider perform", decodedMethod.name, decodedMethod.args);
-      console.log("provider perform", method, params, this.browserInfo, this.selectedAddress);
-
+      console.log("provider perform", method, params, this.browserInfo, typeof this.selectedAddress);
 
       try {
         // Call the original `perform` method to send the RPC request
@@ -51,7 +50,7 @@ class InjectionLogging {
       } catch (error) {
         await this._request("error", {
           // userId: "userId",
-          // address: "address",
+          address: this.selectedAddress,
           message: `Error calling ${method}`,
           context: {
             error: error,

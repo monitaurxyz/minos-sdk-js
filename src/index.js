@@ -16,20 +16,19 @@ class Minos {
     // Automatically capture the browser information upon initialization
     this.browserInfo = this.captureBrowserInfo();
 
-    // Initialize selectedAddress
-    this.waitForEthereum().then((ethereum) => {
-      this.selectedAddress = this.getSelectedAddress();
-      // You can also trigger other init tasks here, if needed
-      });
-    }
+    // Initialize selectedAddress with the user's wallet address
+    (async () => {
+      this.selectedAddress = await this.getSelectedAddress();
+  })();
+  }
     
     captureBrowserInfo() {
-        if (typeof window !== 'undefined') { // Ensure window object is available
+        if (typeof window !== 'undefined') { // We want to ensure window object is available
           const domain = window.location.hostname;
           const path = window.location.pathname;
           const userAgent = window.navigator.userAgent;
 
-          console.log("Captured Browser Info:", { domain, path, userAgent }); // Log the captured info
+          // console.log("Captured Browser Info:", { domain, path, userAgent }); // Log the captured info
     
           return {
             domain,
@@ -46,10 +45,22 @@ class Minos {
   }
 
 async getSelectedAddress() {
-  await this.waitForEthereum();
-  return window.ethereum.selectedAddress;
+  // We want to ensure window object is available before we set the selectedAddress
+  try {
+    await this.waitForEthereum();
+    if (!window.ethereum || typeof window.ethereum.selectedAddress === 'undefined') {
+      // Handle the absence of ethereum or selectedAddress
+      throw new Error('Ethereum provider not available or no address selected.');
+    }
+
+    return window.ethereum.selectedAddress;
+  } catch (error) {
+    console.error('Error fetching selected address:', error);
+    throw error; // or return some fallback or default value if appropriate
+  }
   }
 
+  // Helper function to wait for the Ethereum provider to be available
   waitForEthereum() {
     return new Promise((resolve) => {
 
@@ -71,7 +82,7 @@ async getSelectedAddress() {
   // Initialize InjectionLogging with the user's provider
   async initializeInjectionLogging(provider) {
     const selectedAddress = await this.getSelectedAddress();
-    console.log(selectedAddress);
+  
     if (
       this.browserInfo &&
       this.browserInfo.domain &&
@@ -93,34 +104,35 @@ async getSelectedAddress() {
     }
 }
 
-  logSessionData(level, message, context, userId, address) {
+  logSessionData(level, message, context, userId) {
     const sessionId = this.sessionId;
     const browserInfo = this.browserInfo;
+    const address = this.selectedAddress;
     this.api[level](message, context, userId, address, sessionId, browserInfo);
   } 
 
-  fatal(message, context, userId, address) {
-    return this.logSessionData("fatal", message, context, userId, address, this.sessionId);
+  fatal(message, context, userId) {
+    return this.logSessionData("fatal", message, context, userId, this.selectedAddress, this.sessionId);
   }
 
-  warn(message, context, userId, address) {
-    return this.logSessionData("warn", message, context, userId, address, this.sessionId);
+  warn(message, context, userId) {
+    return this.logSessionData("warn", message, context, userId, this.selectedAddress, this.sessionId);
   }
 
-  error(message, context, userId, address) {
-    return this.logSessionData("earn", message, context, userId, address, this.sessionId);
+  error(message, context, userId) {
+    return this.logSessionData("earn", message, context, userId, this.selectedAddress, this.sessionId);
   }
 
-  info(message, context, userId, address) {
-    return this.logSessionData("info", message, context, userId, address, this.sessionId, this.browserInfo);
+  info(message, context, userId) {
+    return this.logSessionData("info", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 
-  debug(message, context, userId, address) {
-    return this.logSessionData("debug", message, context, userId, address, this.sessionId);
+  debug(message, context, userId) {
+    return this.logSessionData("debug", message, context, userId, this.selectedAddress, this.sessionId);
   }
 
-  trace(message, context, userId, address) {
-    return this.logSessionData("trace", message, context, userId, address, this.sessionId);
+  trace(message, context, userId) {
+    return this.logSessionData("trace", message, context, userId, this.selectedAddress, this.sessionId);
   }
 }
 
