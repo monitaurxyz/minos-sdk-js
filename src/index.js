@@ -112,15 +112,15 @@ async getSelectedAddress() {
   } 
 
   fatal(message, context, userId) {
-    return this.logSessionData("fatal", message, context, userId, this.selectedAddress, this.sessionId);
+    return this.logSessionData("fatal", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 
   warn(message, context, userId) {
-    return this.logSessionData("warn", message, context, userId, this.selectedAddress, this.sessionId);
+    return this.logSessionData("warn", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 
   error(message, context, userId) {
-    return this.logSessionData("earn", message, context, userId, this.selectedAddress, this.sessionId);
+    return this.logSessionData("earn", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 
   info(message, context, userId) {
@@ -128,11 +128,11 @@ async getSelectedAddress() {
   }
 
   debug(message, context, userId) {
-    return this.logSessionData("debug", message, context, userId, this.selectedAddress, this.sessionId);
+    return this.logSessionData("debug", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 
   trace(message, context, userId) {
-    return this.logSessionData("trace", message, context, userId, this.selectedAddress, this.sessionId);
+    return this.logSessionData("trace", message, context, userId, this.selectedAddress, this.sessionId, this.browserInfo);
   }
 }
 
